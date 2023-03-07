@@ -10,8 +10,11 @@ root.geometry("1000x300+150+150")
 def CreateNewWindow():
     # 建立新視窗 showdetail
     NewWindows = Toplevel(root)
+    NewWindows = Tk() 
+    NewWindows.title("HW2")
+    NewWindows.geometry("1000x300+150+150")
     # create table
-    treeview_name = ttk.Treeview(root, columns=["Product Name", "Unit Price", "Quantity", "Subtotal"])
+    treeview_name = ttk.Treeview(NewWindows, columns=["Product Name", "Unit Price", "Quantity", "Subtotal"])
     # create columns title
     treeview_name.heading("#0",text="Product Name")
     treeview_name.heading("#1",text="Unit Price")
