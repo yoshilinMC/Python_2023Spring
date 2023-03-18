@@ -53,7 +53,7 @@ listbox.insert(2,"A2")
 listbox.insert(3,"A3")
 listbox.pack()
 """
-"""
+# """
 def choose():
     label["text"] = box.get(box.curselection())
 # List BMW
@@ -70,6 +70,7 @@ btn.grid(row=1,column=0,sticky=W)
 # Label
 label = Label(root,text="", fg="black", bg="white",anchor=W, relief="sunken",bd=2)
 label.grid(row=3,column=0,columnspan=3,sticky=W+E+S)
+# """
 """
 def choose():
     filePath = filedialog.askopenfilename(title="選取照片",initialdir="C:/Users/yoshi_pgnry07/Documents",multiple = False)
@@ -82,5 +83,6 @@ btn = Button(text="Choose",command=choose)
 btn.pack()
 label = Label(root)
 label.pack()
+"""
 
 root.mainloop()
