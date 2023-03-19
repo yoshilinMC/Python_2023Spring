@@ -33,7 +33,7 @@ label7 = Label(root, text="processing", relief="sunken", bg="white",fg="black",a
 # 加入視窗
 label7.pack(fill=X, side=BOTTOM)
 """
-"""
+# """
 # statusbar
 # start button function
 def start():
@@ -54,6 +54,7 @@ val.set("Initialization...")
 statusbar = Label(root, textvariable=val, relief="sunken", bg="white",fg="black",anchor=W,bd=2)
 # 加入視窗
 statusbar.pack(fill=X, side=BOTTOM)
+# """
 """
 table = ttk.Treeview(root, columns=["Product Name", "Unit Price", "Quantity", "Subtotal"])
 # create columns title
@@ -71,5 +72,6 @@ table.tag_configure("totalcolor", background="#E7E2E2")
 table.insert("",index="end",text="sofa",values=("2000","2","40000"))
 # pack
 table.pack()
+"""
 
 root.mainloop()
