@@ -29,12 +29,11 @@ smtp = smtplib.SMTP(host="smtp.gmail.com", port="587")
 # use with auto freed the resource
 with open("C:/Users/yoshi_pgnry07/Documents/Python_2023Spring/class5/password.txt", "r") as f:
     mailToken = f.read()
-    print(len(mailToken))
 with smtp:
     try:
         smtp.ehlo()
         smtp.starttls()
-        smtp.login("yoshilin77@gmail.com", mailToken)
+        smtp.login("yoshilin2.0@gmail.com", mailToken)
         smtp.send_message(content)
         print("The Email is Sended Completely!")
         smtp.quit()
