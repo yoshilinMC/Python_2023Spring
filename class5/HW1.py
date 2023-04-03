@@ -9,17 +9,17 @@ from email.mime.multipart import MIMEMultipart
 import smtplib
 
 # MimeText
-text = MIMEText(" Demo-Im an email from python")
+text = MIMEText("I'm Yoshi I like to play video games.")
 # Use bytes for reading the pic
-image = MIMEImage(Path("C:/Users/yoshi_pgnry07/Documents/Python_2023Spring/class1/logo_tree.png").read_bytes())
+image = MIMEImage(Path("C:/Users/yoshi_pgnry07/Documents/Python_2023Spring/class5/yoshi.jpg").read_bytes())
 # MimeMultiPart
 content = MIMEMultipart()
 # Title
-content["subject"] = "2023 python app 新程式春季班 <Demo>"
+content["subject"] = "2023 春季班 自我介紹"
 # 收件
 content["from"] = "yoshilin2.0@gmail.com"
 # 寄件
-content["to"] = "ivanlin@gmail.com"
+content["to"] = "kubetech.academy0524@gmail.com"
 # content
 content.attach(text)
 # Img content
