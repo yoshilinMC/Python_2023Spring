@@ -35,7 +35,7 @@ Me = health()
 Me.getCold()
 print("After getCold(): I'm",health.healthl)
 """
-"""
+# """
 class Person:
     def __init__(self,eyesColor,hairColor):
         self.eyes = eyesColor
@@ -60,3 +60,4 @@ class Person:
 work = Person()
 work_time = work.hours(8)
 print("working hours : ",work_time)
+"""
