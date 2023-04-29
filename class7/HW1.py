@@ -3,6 +3,7 @@ from pathlib import Path
 import pygsheets
 from tkinter import *
 import tkinter.ttk as ttk
+import pandas as pd
 
 root = Tk() 
 root.title("HW1")
@@ -20,10 +21,24 @@ val4 = Variable()
 val5 = Variable()
 
 def Sign():
-    ws.update_value("A2",val)
-    ws.update_value("B2",val2)
-    ws.update_value("C2",val3)
-    ws.update_value("D2",val4)
+    # ws.update_value("A2",val)
+    # ws.update_value("B2",val2)
+    # ws.update_value("C2",val3)
+    # ws.update_value("D2",val4)
+    name = Namebx.get()
+    mail = Emailbx.get()
+    ps = PSbx.get()
+    pn = PNbx.get()
+
+    print("Name: "+str(name)+"\nEmail :"+str(mail)+"\nPassword"+str(ps)+"\nPhone Number"+str(pn))
+    df = pd.DataFrame(ws.get_all_records())
+    df.loc[len(df.index)] = [str(name), str(mail), str(ps), str(pn)]
+    print(df)
+    ws.set_dataframe(df, "A1")
+
+    # 1
+    result = Label(root, text="Access", fg="red")
+    result.grid(row=9,column=0,columnspan=3,sticky=W+S)
 
 ws = sht[0]
 ws.update_value("A1","Name")

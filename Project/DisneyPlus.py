@@ -19,6 +19,7 @@ root = Tk()
 root.title("Disney+")
 root.geometry("600x650+150+150")
 
+
 # # Create a ScrollFrame widget
 # sframe1 = ScrolledFrame(root,width=300, height=300,bg="Pink")
 # sframe1.grid()
@@ -28,12 +29,68 @@ root.geometry("600x650+150+150")
 # # create a frame within the ScrolledFrame
 # inner_frame = sframe1.display_widget(Frame)
 
+# # # Buy or Login
+def Buy_Login():
+    b_l = Toplevel()
+    b_l.title("Buy or Login")
+    b_l.geometry("150x150")
+    # row0
+    Buybtn = Button(b_l,text="Buy",command=Buy_1)
+    Loginbtn = Button(b_l,text="Login",command=Login)
+    Buybtn.grid(row=0,column=0,padx=5,pady=5,sticky=W+E+N+S)
+    Loginbtn.grid(row=1,column=0,padx=5,pady=5,sticky=W+E+S+N)
+
+# # Login
+def Login():
+    Login = Toplevel()
+    Login.title("Login")
+    Login.geometry("300x300")
+
+# # buy
+def Buy_1():
+    Buy = Toplevel()
+    Buy.title("Buy")
+    Buy.geometry("300x300")
+    # row0
+    BuyLbl = Label(Buy, text="Email :")
+    BuyLbl.grid(row=0,column=0)
+    MailEntry = Entry(Buy)
+    MailEntry.grid(row=1,column=0)
+    BuyLbl2 = Label(Buy, text="信用卡號 :")
+    BuyLbl2.grid(row=2,column=0)
+    NumEntry = Entry(Buy)
+    NumEntry.grid(row=3,column=0)
+    Enterbtn = Button(Buy, text="Buy",command=lambda:Buy_22(Buy))
+    Enterbtn.grid(row=4,column=0)
+    Buy.mainloop()
+
+def Buy_22(screem,screem2):
+    def Check():
+        if str(CheckEntry.get()) == "abcde":
+            OKLbl = Label(Buy_2,text="Success")
+            OKLbl.grid(row=2,column=0,sticky=W+S+N+E)
+            Buy_2.destroy()
+            screem.destroy()
+        else:
+            OKLbl = Label(Buy_2,text="Wrong")
+            OKLbl.grid(row=2,column=0,sticky=W+S+N+E)
+    Buy_2 = Toplevel()
+    Buy_2.title("Info")
+    Buy_2.geometry("150x150")
+    CheckEntry = Entry(Buy_2)
+    CheckEntry.grid(row=0,column=0)
+    Checkbtn = Button(Buy_2,text="Check",command=Check)
+    Checkbtn.grid(row=1,column=0)
+    Buy_2.mainloop()
+# # Login
+
+# # root 
 # row0
-DisneyImage = Image.open("C:/Users/yoshi_pgnry07/Documents/Python_2023Spring/Project/Pic/Disney.jpg")
+DisneyImage = Image.open("Project/Pic/Disney.jpg")
 DisneyImage = DisneyImage.resize((480,80))
 DisneyImage = ImageTk.PhotoImage(DisneyImage)
-DisneyLabel = Label(root, image=DisneyImage)
-DisneyLabel.grid(row=0,column=0,columnspan=8,padx=5,sticky=W+N+S+E)
+Disneybtn = Button(root, image=DisneyImage,command=Buy_Login)
+Disneybtn.grid(row=0,column=0,columnspan=8,padx=5,sticky=W+N+S+E)
 
 # row1
 BannerImage = Image.open("Project/Pic/曼達.jpg")
@@ -80,6 +137,21 @@ FamousMovLbl = Label(root,text="熱門電影 :")
 FamousMovLbl.grid(row=4,column=0,sticky=W+S+N)
 
 # row5 
+DrImg = Image.open("Project/Pic/Strange.jpg")
+DrImg = DrImg.resize((150,200))
+DrImg = ImageTk.PhotoImage(DrImg)
+SCImg = Image.open("Project/Pic/ShanChi.jpg")
+SCImg = SCImg.resize((150,200))
+SCImg = ImageTk.PhotoImage(SCImg)
+LeoImg = Image.open("Project/Pic/黑豹2.jpg")
+LeoImg = LeoImg.resize((150,200))
+LeoImg = ImageTk.PhotoImage(LeoImg)
 
+Drbtn = Button(root, image=DrImg)
+Drbtn.grid(row=5,column=0,padx=5,sticky=W+S+N)
+SCbtn = Button(root, image=SCImg)
+SCbtn.grid(row=5,column=2,padx=5,sticky=W+S+N)
+Leobtn = Button(root, image=LeoImg)
+Leobtn.grid(row=5,column=4,padx=5,sticky=W+S+N)
 
 root.mainloop()
