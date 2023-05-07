@@ -20,20 +20,21 @@ import pygsheets
 import pandas as pd
 import requests
 from tkvideo import tkvideo
+from random import *
 
 
 root = Tk() 
 root.title("Disney+")
 root.geometry("600x800+150+0")
 
-# # Create a ScrollFrame widget
-# sframe1 = ScrolledFrame(root,width=300, height=300,bg="Pink")
-# sframe1.grid()
-# # Bind the arrow keys and scroll wheel
-# sframe1.bind_arrow_keys(root)
-# sframe1.bind_scroll_wheel(root)
-# # create a frame within the ScrolledFrame
-# inner_frame = sframe1.display_widget(Frame)
+# Create a ScrollFrame widget
+sframe1 = ScrolledFrame(root,width=600,height=800,bg="white")
+sframe1.grid()
+# Bind the arrow keys and scroll wheel
+sframe1.bind_arrow_keys(root)
+sframe1.bind_scroll_wheel(root)
+# create a frame within the ScrolledFrame
+inner_frame = sframe1.display_widget(Frame)
 
 # Set google cloud user Know the identity
 gc = pygsheets.authorize(service_file="class7/rational-world-383208-b189dfd24b52.json")
@@ -70,40 +71,72 @@ def Buy_1():
     pslbl.grid(row=4,column=0)
     psentry = Entry(Buy)
     psentry.grid(row=5,column=0)
-    Enterbtn = Button(Buy, text="Buy",command=lambda:Buy_22(Buy,MailEntry,NumEntry,psentry))
+    Enterbtn = Button(Buy, text="Buy",command=lambda:Buy_22(Buy,MailEntry.get(),NumEntry.get(),psentry.get()))
     Enterbtn.grid(row=6,column=0)
     Buy.mainloop()
 
-####### 發EMAIL
-def Buy_22(screem,maile,creditCarde,passworde):
-    def Check():
-        if str(CheckEntry.get()) == "abcde":
-            OKLbl = Label(Buy_2,text="Success")
-            OKLbl.grid(row=2,column=0,sticky=W+S+N+E)
-            Buy_2.destroy()
-            screem.destroy()
-        else:
-            OKLbl = Label(Buy_2,text="Wrong")
-            OKLbl.grid(row=2,column=0,sticky=W+S+N+E)
+def Buy_22(screen,maile,creditCarde,passworde):
+    password = randint(1000,9999)
+    # MimeText
+    text = MIMEText("This is the password of your Disney+ Acount : "+str(password))
+    # Use bytes for reading the pic
+    image = MIMEImage(Path("Project/Pic/Disney.jpg").read_bytes())
+    # MimeMultiPart
+    content = MIMEMultipart()
+    # Title
+    content["subject"] = "Disney+ Create New Acount Password"
+    # 收件
+    content["from"] = "yoshilin2.0@gmail.com"
+    # 寄件
+    content["to"] = str(maile)
+    print(maile)
+    # content
+    content.attach(text)
+    # Img content
+    content.attach(image)
+    # smtplib
+    smtp = smtplib.SMTP(host="smtp.gmail.com", port="587")
+    # use with auto freed the resource
+    with open("Project/password.txt", "r") as f:
+        mailToken = f.read()
+    with smtp:
+        try:
+            smtp.ehlo()
+            smtp.starttls()
+            smtp.login("yoshilin2.0@gmail.com", mailToken)
+            smtp.send_message(content)
+            print("The Email is Sended Completely!")
+            smtp.quit()
+        except Exception as e:
+            print("Error Message: ",e)
     Buy_2 = Toplevel()
     Buy_2.title("Info")
     Buy_2.geometry("150x150")
+    CheckLbl = Label(Buy_2,text="Enter The Password")
+    CheckLbl.grid(row=0,column=0)
     CheckEntry = Entry(Buy_2)
-    CheckEntry.grid(row=0,column=0)
-    Checkbtn = Button(Buy_2,text="Check",command=Check)
-    Checkbtn.grid(row=1,column=0)
-    # # #
-    Email = maile.get()
-    creditCard = creditCarde.get()
-    password = passworde.get()
-    print("Email:"+str(Email)+"\nCredit Card:"+str(creditCard)+"\nPassword:"+str(password))
+    CheckEntry.grid(row=1,column=0)
+    Checkbtn = Button(Buy_2,text="Check",command=lambda:Check(password,CheckEntry.get(),Buy_2,screen,maile,creditCarde,passworde))
+    Checkbtn.grid(row=2,column=0)
+    Buy_2.mainloop()
+
+# # Send Email
+def Check(enterPassword,realPassword,screen_2,screen,Email,CreditCard,Password):
+    print("Email:"+str(Email)+"\nCredit Card:"+str(CreditCard)+"\nPassword:"+str(Password))
     df = pd.DataFrame(ws.get_all_records())
-    df.loc[len(df.index)] = [str(Email), str(creditCard), str(password)]
+    df.loc[len(df.index)] = [str(Email), str(CreditCard), str(Password)]
     print(df)
     ws.set_dataframe(df, 'A1') #從欄位 A1 開始
-    result = Label(root, text="Registration Success...",fg="red")
+    result = Label(inner_frame, text="Registration Success...",fg="red")
     result.grid(row=9,column=0, columnspan=3, sticky=W+S)
-    Buy_2.mainloop()
+    if str(enterPassword) == str(realPassword):
+        OKLbl = Label(screen_2,text="Success")
+        OKLbl.grid(row=2,column=0,sticky=W+S+N+E) 
+        screen_2.destroy()
+        screen.destroy()
+    else:
+        OKLbl = Label(screen_2,text="Wrong")
+        OKLbl.grid(row=2,column=0,sticky=W+S+N+E)
 
 # # Login
 def Login():
@@ -153,19 +186,47 @@ def video(mov):
     exitbtn.grid(row=1,column=0,sticky=E+N+S)
     playVideo.mainloop()
 
+# # Marvel
+def Marvel():
+    root_v2 = Toplevel() 
+    root_v2.title("Marvel")
+    root_v2.geometry("600x800+150+0")
+    # row0
+    NiceMovLbl = Label(root_v2,text="精選 :")
+    NiceMovLbl.grid(row=0,column=0,sticky=W+S+N)
+    # row1
+    FirstImg = Image.open("Project/Pic/Strange.jpg")
+    FirstImg = FirstImg.resize((150,200))
+    FirstImg = ImageTk.PhotoImage(FirstImg)
+    SecondtImg = Image.open("Project/Pic/ShanChi.jpg")
+    SecondtImg = SecondtImg.resize((150,200))
+    SecondtImg = ImageTk.PhotoImage(SecondtImg)
+    ThirdtImg = Image.open("Project/Pic/黑豹2.jpg")
+    ThirdtImg = ThirdtImg.resize((150,200))
+    ThirdtImg = ImageTk.PhotoImage(ThirdtImg)
+
+    Firstbtn = Button(root_v2, image=FirstImg,command=lambda:video("Project/Pic/Dr.StrangeMov.mp4"))
+    Firstbtn.grid(row=1,column=0,padx=5,sticky=W+S+N)
+    Secondbtn = Button(root_v2, image=SecondtImg,command=lambda:video("Project/Pic/Leo2Mov.mp4"))
+    Secondbtn.grid(row=1,column=2,padx=5,sticky=W+S+N)
+    Thirdbtn = Button(root_v2, image=ThirdtImg,command=lambda:video("Project/Pic/ShanChiMov.mp4"))
+    Thirdbtn.grid(row=1,column=4,padx=5,sticky=W+S+N)
+
+    root_v2.mainloop()
+
 # # root 
 # row0
 DisneyImage = Image.open("Project/Pic/Disney.jpg")
 DisneyImage = DisneyImage.resize((480,300))
 DisneyImage = ImageTk.PhotoImage(DisneyImage)
-Disneybtn = Button(root, image=DisneyImage,command=Buy_Login,width=480,height=200)
+Disneybtn = Button(inner_frame, image=DisneyImage,command=Buy_Login,width=480,height=200)
 Disneybtn.grid(row=0,column=0,columnspan=8,padx=0,sticky=N+S)
 
 # row1
 BannerImage = Image.open("Project/Pic/曼達.jpg")
 BannerImage = BannerImage.resize((480,200))
 BannerImage = ImageTk.PhotoImage(BannerImage)
-BannerLabel = Label(root, image=BannerImage)
+BannerLabel = Label(inner_frame, image=BannerImage)
 BannerLabel.grid(row=1,column=0,columnspan=8,padx=5,sticky=W+N+S+E) 
 
 # row2
@@ -178,12 +239,12 @@ PIXARImg = ImageTk.PhotoImage(PIXARImg)
 MarvelImg = Image.open("Project/Pic/Marvel.jpg")
 MarvelImg = MarvelImg.resize((180,50))
 MarvelImg = ImageTk.PhotoImage(MarvelImg)
-Disneylbl = Button(root, image=DisneyImg)
-Disneylbl.grid(row=2,column=0,columnspan=2,padx=5,sticky=W)
-PIXARlbl = Button(root, image=PIXARImg)
-PIXARlbl.grid(row=2,column=2,columnspan=2,padx=5,sticky=W+E)
-Marvellbl = Button(root, image=MarvelImg)
-Marvellbl.grid(row=2,column=4,columnspan=2,padx=5,sticky=E)
+Disneybtn = Button(inner_frame, image=DisneyImg)
+Disneybtn.grid(row=2,column=0,columnspan=2,padx=5,sticky=W)
+PIXARbtn = Button(inner_frame, image=PIXARImg)
+PIXARbtn.grid(row=2,column=2,columnspan=2,padx=5,sticky=W+E)
+Marvelbtn = Button(inner_frame, image=MarvelImg,command=Marvel)
+Marvelbtn.grid(row=2,column=4,columnspan=2,padx=5,sticky=E)
 # row3
 SWImg = Image.open("Project/Pic/StarWars.jpg")
 SWImg = SWImg.resize((180,50))
@@ -194,15 +255,15 @@ NGImg = ImageTk.PhotoImage(NGImg)
 StarImg = Image.open("Project/Pic/Star.jpg")
 StarImg = StarImg.resize((180,50))
 StarImg = ImageTk.PhotoImage(StarImg)
-SWlbl = Button(root, image=SWImg)
-SWlbl.grid(row=3,column=0,columnspan=2,padx=5,sticky=W)
-NGlbl = Button(root, image=NGImg)
-NGlbl.grid(row=3,column=2,columnspan=2,padx=5,sticky=W+E)
-Starlbl = Button(root, image=StarImg)
-Starlbl.grid(row=3,column=4,columnspan=2,padx=5,sticky=E)
+SWbtn = Button(inner_frame, image=SWImg)
+SWbtn.grid(row=3,column=0,columnspan=2,padx=5,sticky=W)
+NGbtn = Button(inner_frame, image=NGImg)
+NGbtn.grid(row=3,column=2,columnspan=2,padx=5,sticky=W+E)
+Starbtn = Button(inner_frame, image=StarImg)
+Starbtn.grid(row=3,column=4,columnspan=2,padx=5,sticky=E)
 
 # row4
-FamousMovLbl = Label(root,text="熱門電影 :")
+FamousMovLbl = Label(inner_frame,text="熱門電影 :")
 FamousMovLbl.grid(row=4,column=0,sticky=W+S+N)
 
 # row5 
@@ -216,11 +277,11 @@ LeoImg = Image.open("Project/Pic/黑豹2.jpg")
 LeoImg = LeoImg.resize((150,200))
 LeoImg = ImageTk.PhotoImage(LeoImg)
 
-Drbtn = Button(root, image=DrImg,command=lambda:video("Project/Pic/Dr.StrangeMov.mp4"))
+Drbtn = Button(inner_frame, image=DrImg,command=lambda:video("Project/Pic/Dr.StrangeMov.mp4"))
 Drbtn.grid(row=5,column=0,padx=5,sticky=W+S+N)
-SCbtn = Button(root, image=SCImg,command=lambda:video("Project/Pic/Leo2Mov.mp4"))
+SCbtn = Button(inner_frame, image=SCImg,command=lambda:video("Project/Pic/Leo2Mov.mp4"))
 SCbtn.grid(row=5,column=2,padx=5,sticky=W+S+N)
-Leobtn = Button(root, image=LeoImg,command=lambda:video("Project/Pic/ShanChiMov.mp4"))
+Leobtn = Button(inner_frame, image=LeoImg,command=lambda:video("Project/Pic/ShanChiMov.mp4"))
 Leobtn.grid(row=5,column=4,padx=5,sticky=W+S+N)
 
 root.mainloop()

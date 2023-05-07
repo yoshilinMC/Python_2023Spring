@@ -10,7 +10,7 @@ root = Tk()
 root.title("Class3")
 root.geometry("400x300+150+150")
 
-"""
+# """
 # Create a ScrollFrame widget
 sframe1 = ScrolledFrame(root,width=300, height=300,bg="Pink")
 sframe1.pack()
@@ -29,7 +29,7 @@ btn2.pack()
 btn3.pack()
 btn4.pack()
 btn5.pack()
-"""
+# """
 """
 def Check():
     val.set("廠牌 : "+ str(box.current()+1)+". "+box.get())
@@ -53,7 +53,7 @@ listbox.insert(2,"A2")
 listbox.insert(3,"A3")
 listbox.pack()
 """
-# """
+"""
 def choose():
     label["text"] = box.get(box.curselection())
 # List BMW
@@ -70,7 +70,7 @@ btn.grid(row=1,column=0,sticky=W)
 # Label
 label = Label(root,text="", fg="black", bg="white",anchor=W, relief="sunken",bd=2)
 label.grid(row=3,column=0,columnspan=3,sticky=W+E+S)
-# """
+"""
 """
 def choose():
     filePath = filedialog.askopenfilename(title="選取照片",initialdir="C:/Users/yoshi_pgnry07/Documents",multiple = False)

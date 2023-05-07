@@ -19,7 +19,7 @@ content["subject"] = "2023 python app 新程式春季班 <Demo>"
 # 收件
 content["from"] = "yoshilin2.0@gmail.com"
 # 寄件
-content["to"] = "ivanlin@gmail.com"
+content["to"] = "yoshilin77@gmail.com"
 # content
 content.attach(text)
 # Img content
@@ -27,7 +27,7 @@ content.attach(image)
 # smtplib
 smtp = smtplib.SMTP(host="smtp.gmail.com", port="587")
 # use with auto freed the resource
-with open("C:/Users/yoshi_pgnry07/Documents/Python_2023Spring/class5/password.txt", "r") as f:
+with open("Project/password.txt", "r") as f:
     mailToken = f.read()
 with smtp:
     try:
