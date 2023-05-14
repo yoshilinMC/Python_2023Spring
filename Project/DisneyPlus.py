@@ -21,7 +21,7 @@ import pandas as pd
 import requests
 from tkvideo import tkvideo
 from random import *
-
+from tkinter import messagebox
 
 root = Tk() 
 root.title("Disney+")
@@ -105,7 +105,7 @@ def Buy_22(screen,maile,creditCarde,passworde):
             smtp.starttls()
             smtp.login("yoshilin2.0@gmail.com", mailToken)
             smtp.send_message(content)
-            print("The Email is Sended Completely!")
+            messagebox.showinfo('my messagebox', 'The Email is Sended Completely')
             smtp.quit()
         except Exception as e:
             print("Error Message: ",e)
@@ -143,22 +143,20 @@ def Login():
     def loginfun(email,password):
         df = pd.DataFrame(ws.get_all_records())
         df_result = df[df["Email"]==email]
+        # print(type(df_result["password"][0]),type(password))
         if (len(df_result)) >= 1:
-            print(type(df_result["password"][0]),type(password))
             # 帳號對的時候
-            if ((str(df_result["password"][0]))==password):
+            print(df_result["password"])
+            if ((str(list(df_result["password"])[0]))==password):
                 # 帳號密碼都對的狀況
-                print(df_result["password"])
-                result = Label(Login, text="Correct, You may start your movie",fg="red")
-                result.grid(row=5,column=0, columnspan=3, sticky=W+S)
+                messagebox.showinfo('my messagebox', 'Correct, You may start your movie')
+                Login.destroy()
             else:
                 # 帳號對密碼錯
-                result = Label(Login, text="Wrong password",fg="red")
-                result.grid(row=5,column=0, columnspan=3, sticky=W+S)
+                messagebox.showwarning('my messagebox', 'Wrong Password')
         else:
             # 找不到帳號
-            result = Label(Login, text="Email not found",fg="red")
-            result.grid(row=5,column=0, columnspan=3, sticky=W+S)
+            messagebox.showwarning('my messagebox', 'Email Not Found')
     Login = Toplevel()
     Login.title("Login")
     Login.geometry("300x300")
@@ -186,6 +184,73 @@ def video(mov):
     exitbtn.grid(row=1,column=0,sticky=E+N+S)
     playVideo.mainloop()
 
+# # Disney
+def Disney():
+    root_v2 = Toplevel() 
+    root_v2.title("Disney")
+    root_v2.geometry("600x800+150+0")
+    # row0
+    NiceMovLbl = Label(root_v2,text="原創 :")
+    NiceMovLbl.grid(row=0,column=0,sticky=W+S+N)
+    # row1
+    FirstImg = Image.open("Project/Pic/Frozen2.jpg")
+    FirstImg = FirstImg.resize((150,200))
+    FirstImg = ImageTk.PhotoImage(FirstImg)
+    SecondtImg = Image.open("Project/Pic/Frozen.jpg")
+    SecondtImg = SecondtImg.resize((150,200))
+    SecondtImg = ImageTk.PhotoImage(SecondtImg)
+    ThirdtImg = Image.open("Project/Pic/黑豹2.jpg")
+    ThirdtImg = ThirdtImg.resize((150,200))
+    ThirdtImg = ImageTk.PhotoImage(ThirdtImg)
+    # # #
+    Firstbtn = Button(root_v2, image=FirstImg,command=lambda:video("Project/Video/Dr.StrangeMov.mp4"))
+    Firstbtn.grid(row=1,column=0,padx=5,sticky=W+S+N)
+    Secondbtn = Button(root_v2, image=SecondtImg,command=lambda:video("Project/Video/Leo2Mov.mp4"))
+    Secondbtn.grid(row=1,column=2,padx=5,sticky=W+S+N)
+    Thirdbtn = Button(root_v2, image=ThirdtImg,command=lambda:video("Project/Video/ShanChiMov.mp4"))
+    Thirdbtn.grid(row=1,column=4,padx=5,sticky=W+S+N)
+    # row2
+    NewMovLbl = Label(root_v2,text="迪士尼工作室 :")
+    NewMovLbl.grid(row=2,column=0,sticky=W+S+N)
+    # row3
+    FirstImg_2 = Image.open("Project/Pic/GotG_1.jpg")
+    FirstImg_2 = FirstImg_2.resize((150,200))
+    FirstImg_2 = ImageTk.PhotoImage(FirstImg_2)
+    SecondtImg_2 = Image.open("Project/Pic/Thor_LoveLightning.jpg")
+    SecondtImg_2 = SecondtImg_2.resize((150,200))
+    SecondtImg_2 = ImageTk.PhotoImage(SecondtImg_2)
+    ThirdtImg_2 = Image.open("Project/Pic/EndGame.jpg")
+    ThirdtImg_2 = ThirdtImg_2.resize((150,200))
+    ThirdtImg_2 = ImageTk.PhotoImage(ThirdtImg_2)
+    # # #
+    Firstbtn_2 = Button(root_v2, image=FirstImg_2,command=lambda:video("Project/Video/Dr.StrangeMov.mp4"))
+    Firstbtn_2.grid(row=3,column=0,padx=5,sticky=W+S+N)
+    Secondbtn_2 = Button(root_v2, image=SecondtImg_2,command=lambda:video("Project/Video/Leo2Mov.mp4"))
+    Secondbtn_2.grid(row=3,column=2,padx=5,sticky=W+S+N)
+    Thirdbtn_2 = Button(root_v2, image=ThirdtImg_2,command=lambda:video("Project/Video/ShanChiMov.mp4"))
+    Thirdbtn_2.grid(row=3,column=4,padx=5,sticky=W+S+N)
+    # row4
+    NewMovLbl_1 = Label(root_v2,text="冰雪奇緣 :")
+    NewMovLbl_1.grid(row=4,column=0,sticky=W+S+N)
+    # row5
+    FirstImg_3 = Image.open("Project/Pic/Frozen.jpg")
+    FirstImg_3 = FirstImg_3.resize((150,200))
+    FirstImg_3 = ImageTk.PhotoImage(FirstImg_3)
+    SecondtImg_3 = Image.open("Project/Pic/Frozen2.jpg")
+    SecondtImg_3 = SecondtImg_3.resize((150,200))
+    SecondtImg_3 = ImageTk.PhotoImage(SecondtImg_3)
+    ThirdtImg_3 = Image.open("Project/Pic/BlackWidow.jpg")
+    ThirdtImg_3 = ThirdtImg_3.resize((150,200))
+    ThirdtImg_3 = ImageTk.PhotoImage(ThirdtImg_3)
+    # # #
+    Firstbtn_3 = Button(root_v2, image=FirstImg_3,command=lambda:video("Project/Video/Dr.StrangeMov.mp4"))
+    Firstbtn_3.grid(row=5,column=0,padx=5,sticky=W+S+N)
+    Secondbtn_3 = Button(root_v2, image=SecondtImg_3,command=lambda:video("Project/Video/Leo2Mov.mp4"))
+    Secondbtn_3.grid(row=5,column=2,padx=5,sticky=W+S+N)
+    Thirdbtn_3 = Button(root_v2, image=ThirdtImg_3,command=lambda:video("Project/Video/ShanChiMov.mp4"))
+    Thirdbtn_3.grid(row=5,column=4,padx=5,sticky=W+S+N)
+
+
 # # Marvel
 def Marvel():
     root_v2 = Toplevel() 
@@ -204,16 +269,117 @@ def Marvel():
     ThirdtImg = Image.open("Project/Pic/黑豹2.jpg")
     ThirdtImg = ThirdtImg.resize((150,200))
     ThirdtImg = ImageTk.PhotoImage(ThirdtImg)
-
-    Firstbtn = Button(root_v2, image=FirstImg,command=lambda:video("Project/Pic/Dr.StrangeMov.mp4"))
+    # # #
+    Firstbtn = Button(root_v2, image=FirstImg,command=lambda:video("Project/Video/Dr.StrangeMov.mp4"))
     Firstbtn.grid(row=1,column=0,padx=5,sticky=W+S+N)
-    Secondbtn = Button(root_v2, image=SecondtImg,command=lambda:video("Project/Pic/Leo2Mov.mp4"))
+    Secondbtn = Button(root_v2, image=SecondtImg,command=lambda:video("Project/Video/Leo2Mov.mp4"))
     Secondbtn.grid(row=1,column=2,padx=5,sticky=W+S+N)
-    Thirdbtn = Button(root_v2, image=ThirdtImg,command=lambda:video("Project/Pic/ShanChiMov.mp4"))
+    Thirdbtn = Button(root_v2, image=ThirdtImg,command=lambda:video("Project/Video/ShanChiMov.mp4"))
     Thirdbtn.grid(row=1,column=4,padx=5,sticky=W+S+N)
+    # row2
+    NewMovLbl = Label(root_v2,text="星際異攻隊 :")
+    NewMovLbl.grid(row=2,column=0,sticky=W+S+N)
+    # row3
+    FirstImg_2 = Image.open("Project/Pic/GotG_1.jpg")
+    FirstImg_2 = FirstImg_2.resize((150,200))
+    FirstImg_2 = ImageTk.PhotoImage(FirstImg_2)
+    SecondtImg_2 = Image.open("Project/Pic/Thor_LoveLightning.jpg")
+    SecondtImg_2 = SecondtImg_2.resize((150,200))
+    SecondtImg_2 = ImageTk.PhotoImage(SecondtImg_2)
+    ThirdtImg_2 = Image.open("Project/Pic/EndGame.jpg")
+    ThirdtImg_2 = ThirdtImg_2.resize((150,200))
+    ThirdtImg_2 = ImageTk.PhotoImage(ThirdtImg_2)
+    # # #
+    Firstbtn_2 = Button(root_v2, image=FirstImg_2,command=lambda:video("Project/Video/Dr.StrangeMov.mp4"))
+    Firstbtn_2.grid(row=3,column=0,padx=5,sticky=W+S+N)
+    Secondbtn_2 = Button(root_v2, image=SecondtImg_2,command=lambda:video("Project/Video/Leo2Mov.mp4"))
+    Secondbtn_2.grid(row=3,column=2,padx=5,sticky=W+S+N)
+    Thirdbtn_2 = Button(root_v2, image=ThirdtImg_2,command=lambda:video("Project/Video/ShanChiMov.mp4"))
+    Thirdbtn_2.grid(row=3,column=4,padx=5,sticky=W+S+N)
+    # row4
+    NewMovLbl_1 = Label(root_v2,text="慢威電影宇宙第四階段 :")
+    NewMovLbl_1.grid(row=4,column=0,sticky=W+S+N)
+    # row5
+    FirstImg_3 = Image.open("Project/Pic/WandaVision.jpg")
+    FirstImg_3 = FirstImg_3.resize((150,200))
+    FirstImg_3 = ImageTk.PhotoImage(FirstImg_3)
+    SecondtImg_3 = Image.open("Project/Pic/Loki.jpg")
+    SecondtImg_3 = SecondtImg_3.resize((150,200))
+    SecondtImg_3 = ImageTk.PhotoImage(SecondtImg_3)
+    ThirdtImg_3 = Image.open("Project/Pic/BlackWidow.jpg")
+    ThirdtImg_3 = ThirdtImg_3.resize((150,200))
+    ThirdtImg_3 = ImageTk.PhotoImage(ThirdtImg_3)
+    # # #
+    Firstbtn_3 = Button(root_v2, image=FirstImg_3,command=lambda:video("Project/Video/Dr.StrangeMov.mp4"))
+    Firstbtn_3.grid(row=5,column=0,padx=5,sticky=W+S+N)
+    Secondbtn_3 = Button(root_v2, image=SecondtImg_3,command=lambda:video("Project/Video/Leo2Mov.mp4"))
+    Secondbtn_3.grid(row=5,column=2,padx=5,sticky=W+S+N)
+    Thirdbtn_3 = Button(root_v2, image=ThirdtImg_3,command=lambda:video("Project/Video/ShanChiMov.mp4"))
+    Thirdbtn_3.grid(row=5,column=4,padx=5,sticky=W+S+N)
 
     root_v2.mainloop()
-
+"""
+    # row6
+    NewMovLbl_2 = Label(root_v2,text="慢威電影宇宙第三階段 :")
+    NewMovLbl_2.grid(row=6,column=0,sticky=W+S+N)
+    # row7
+    FirstImg_4 = Image.open("Project/Pic/Strange.jpg")
+    FirstImg_4 = FirstImg_4.resize((150,200))
+    FirstImg_4 = ImageTk.PhotoImage(FirstImg_4)
+    SecondtImg_4 = Image.open("Project/Pic/ShanChi.jpg")
+    SecondtImg_4 = SecondtImg_4.resize((150,200))
+    SecondtImg_4 = ImageTk.PhotoImage(SecondtImg_4)
+    ThirdtImg_4 = Image.open("Project/Pic/黑豹2.jpg")
+    ThirdtImg_4 = ThirdtImg_4.resize((150,200))
+    ThirdtImg_4 = ImageTk.PhotoImage(ThirdtImg_4)
+    # # #
+    Firstbtn_4 = Button(root_v2, image=FirstImg_4,command=lambda:video("Project/Video/Dr.StrangeMov.mp4"))
+    Firstbtn_4.grid(row=7,column=0,padx=5,sticky=W+S+N)
+    Secondbtn_4 = Button(root_v2, image=SecondtImg_4,command=lambda:video("Project/Video/Leo2Mov.mp4"))
+    Secondbtn_4.grid(row=7,column=2,padx=5,sticky=W+S+N)
+    Thirdbtn_4 = Button(root_v2, image=ThirdtImg_4,command=lambda:video("Project/Video/ShanChiMov.mp4"))
+    Thirdbtn_4.grid(row=7,column=4,padx=5,sticky=W+S+N)
+    # row8
+    NewMovLbl_3 = Label(root_v2,text="慢威電影宇宙第二階段 :")
+    NewMovLbl_3.grid(row=8,column=0,sticky=W+S+N)
+    # row9
+    FirstImg_5 = Image.open("Project/Pic/Strange.jpg")
+    FirstImg_5 = FirstImg_5.resize((150,200))
+    FirstImg_5 = ImageTk.PhotoImage(FirstImg_5)
+    SecondtImg_5 = Image.open("Project/Pic/ShanChi.jpg")
+    SecondtImg_5 = SecondtImg_5.resize((150,200))
+    SecondtImg_5 = ImageTk.PhotoImage(SecondtImg_5)
+    ThirdtImg_5 = Image.open("Project/Pic/黑豹2.jpg")
+    ThirdtImg_5 = ThirdtImg_5.resize((150,200))
+    ThirdtImg_5 = ImageTk.PhotoImage(ThirdtImg_5)
+    # # #
+    Firstbtn = Button(root_v2, image=FirstImg_5,command=lambda:video("Project/Video/Dr.StrangeMov.mp4"))
+    Firstbtn.grid(row=9,column=0,padx=5,sticky=W+S+N)
+    Secondbtn = Button(root_v2, image=SecondtImg_5,command=lambda:video("Project/Video/Leo2Mov.mp4"))
+    Secondbtn.grid(row=9,column=2,padx=5,sticky=W+S+N)
+    Thirdbtn = Button(root_v2, image=ThirdtImg_5,command=lambda:video("Project/Video/ShanChiMov.mp4"))
+    Thirdbtn.grid(row=9,column=4,padx=5,sticky=W+S+N)
+    # row10
+    NewMovLbl = Label(root_v2,text="慢威電影宇宙第一階段 :")
+    NewMovLbl.grid(row=10,column=0,sticky=W+S+N)
+    # row11
+    FirstImg = Image.open("Project/Pic/Strange.jpg")
+    FirstImg = FirstImg.resize((150,200))
+    FirstImg = ImageTk.PhotoImage(FirstImg)
+    SecondtImg = Image.open("Project/Pic/ShanChi.jpg")
+    SecondtImg = SecondtImg.resize((150,200))
+    SecondtImg = ImageTk.PhotoImage(SecondtImg)
+    ThirdtImg = Image.open("Project/Pic/黑豹2.jpg")
+    ThirdtImg = ThirdtImg.resize((150,200))
+    ThirdtImg = ImageTk.PhotoImage(ThirdtImg)
+    # # #
+    Firstbtn = Button(root_v2, image=FirstImg,command=lambda:video("Project/Video/Dr.StrangeMov.mp4"))
+    Firstbtn.grid(row=11,column=0,padx=5,sticky=W+S+N)
+    Secondbtn = Button(root_v2, image=SecondtImg,command=lambda:video("Project/Video/Leo2Mov.mp4"))
+    Secondbtn.grid(row=11,column=2,padx=5,sticky=W+S+N)
+    Thirdbtn = Button(root_v2, image=ThirdtImg,command=lambda:video("Project/Video/ShanChiMov.mp4"))
+    Thirdbtn.grid(row=11,column=4,padx=5,sticky=W+S+N)
+"""
 # # root 
 # row0
 DisneyImage = Image.open("Project/Pic/Disney.jpg")
@@ -239,7 +405,7 @@ PIXARImg = ImageTk.PhotoImage(PIXARImg)
 MarvelImg = Image.open("Project/Pic/Marvel.jpg")
 MarvelImg = MarvelImg.resize((180,50))
 MarvelImg = ImageTk.PhotoImage(MarvelImg)
-Disneybtn = Button(inner_frame, image=DisneyImg)
+Disneybtn = Button(inner_frame, image=DisneyImg,command=Disney)
 Disneybtn.grid(row=2,column=0,columnspan=2,padx=5,sticky=W)
 PIXARbtn = Button(inner_frame, image=PIXARImg)
 PIXARbtn.grid(row=2,column=2,columnspan=2,padx=5,sticky=W+E)
@@ -277,11 +443,33 @@ LeoImg = Image.open("Project/Pic/黑豹2.jpg")
 LeoImg = LeoImg.resize((150,200))
 LeoImg = ImageTk.PhotoImage(LeoImg)
 
-Drbtn = Button(inner_frame, image=DrImg,command=lambda:video("Project/Pic/Dr.StrangeMov.mp4"))
+Drbtn = Button(inner_frame, image=DrImg,command=lambda:video("Project/Video/Dr.StrangeMov.mp4"))
 Drbtn.grid(row=5,column=0,padx=5,sticky=W+S+N)
-SCbtn = Button(inner_frame, image=SCImg,command=lambda:video("Project/Pic/Leo2Mov.mp4"))
+SCbtn = Button(inner_frame, image=SCImg,command=lambda:video("Project/Video/ShanChiMov.mp4"))
 SCbtn.grid(row=5,column=2,padx=5,sticky=W+S+N)
-Leobtn = Button(inner_frame, image=LeoImg,command=lambda:video("Project/Pic/ShanChiMov.mp4"))
+Leobtn = Button(inner_frame, image=LeoImg,command=lambda:video("Project/Video/Leo2Mov.mp4"))
 Leobtn.grid(row=5,column=4,padx=5,sticky=W+S+N)
+
+# row6
+SuggestMovLbl = Label(inner_frame,text="推薦給您 :")
+SuggestMovLbl.grid(row=6,column=0,sticky=W+S+N)
+
+# row7
+GotGImg = Image.open("Project/Pic/GuardianOfTheGalaxy.jpg")
+GotGImg = GotGImg.resize((150,200))
+GotGImg = ImageTk.PhotoImage(GotGImg)
+SpiderMan2Img = Image.open("Project/Pic/TheAmazing_2.jpg")
+SpiderMan2Img = SpiderMan2Img.resize((150,200))
+SpiderMan2Img = ImageTk.PhotoImage(SpiderMan2Img)
+SpiderManFFHImg = Image.open("Project/Pic/SpiderManFFH.jpg")
+SpiderManFFHImg = SpiderManFFHImg.resize((150,200))
+SpiderManFFHImg = ImageTk.PhotoImage(SpiderManFFHImg)
+
+GotGbtn = Button(inner_frame, image=GotGImg,command=lambda:video("Project/Video/GotG.mp4"))
+GotGbtn.grid(row=7,column=0,padx=5,sticky=W+S+N)
+SpiderMan2btn = Button(inner_frame, image=SpiderMan2Img,command=lambda:video("Project/Video/AmzaingSpiderMan2.mp4"))
+SpiderMan2btn.grid(row=7,column=2,padx=5,sticky=W+S+N)
+SpiderManFFHbtn = Button(inner_frame, image=SpiderManFFHImg,command=lambda:video("Project/Video/SpiderManFFH.mp4"))
+SpiderManFFHbtn.grid(row=7,column=4,padx=5,sticky=W+S+N)
 
 root.mainloop()
